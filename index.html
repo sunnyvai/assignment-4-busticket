@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticket</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div>
+        <div id="font-page">
+            <!--Header and Menu Section-->
+
+            <header class="container">
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a class="active" href="#">Sign Up</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <!--Booking Section-->
+            <main class="main-content container">
+                <div class="booking-content">
+                    <h1>Mega City Bus</h1>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+                        of type and scrambled it to make a type specimen book.</p>
+                </div>
+
+
+                <div class="booking-form">
+                    <h3>Explore By Bus</h3>
+
+                    <div class="inputs">
+                        <div class="input-group">
+                            <label" for="">From</label>
+                                <input class="inp-style" type="text" name="" placeholder="Dhaka">
+                        </div>
+                        <div class="input-group">
+                            <label" for="">From</label>
+                                <input class="inp-style" type="text" name="" placeholder="Chittagrame">
+                        </div>
+                    </div>
+
+                    <div class="inputs">
+                        <div class="input-group">
+                            <label" for="">Departure</label>
+                                <input class="inp-style" type="date" name="">
+                        </div>
+                        <div class="input-group">
+                            <label for="">Return</label>
+                            <input class="inp-style" type="date" name="">
+                        </div>
+                    </div>
+                    <div class="inputs">
+                        <div class="input-group f-class">
+                            <div>
+                                <label for="">First Class ($150)</label>
+                                <input id="FirstClass-count" class="inp-style inp-width" type="number" name=""
+                                    value="1">
+                                <h5 id="FirstClass-total">$150</h5>
+                            </div>
+
+                            <div class="plus-minus-btn">
+                                <button onclick="handleTicketChange('FirstClass', true)"> + </button> <br> <button
+                                    onclick="handleTicketChange('FirstClass', false)"> - </button>
+                            </div>
+                        </div>
+
+                        <div class="input-group f-class">
+                            <div>
+                                <label for="">Economy ($100)</label>
+                                <input id="Economy-count" class="inp-style inp-width" type="number" name="" value="1">
+                                <h5 id="Economy-total">$100</h5>
+                            </div>
+                            <div class="plus-minus-btn">
+                                <button onclick="handleTicketChange('Economy' ,true)"> + </button> <br> <button
+                                    onclick="handleTicketChange('Economy', false)"> - </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="calculations">
+                        <div class="amount">
+                            <div class="left">
+                                <p>Subtotal</p>
+                            </div>
+                            <div class="right">
+                                <p id="total-price">$250</p>
+                            </div>
+                        </div>
+
+                        <div class="amount">
+                            <div class="left">
+                                <p>Charge 10% VAT</p>
+                            </div>
+                            <div class="right">
+                                <p id="tax-amount">$25</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="amount">
+                            <div class="left">
+                                <h4>Total</h4>
+                            </div>
+                            <div class="right">
+                                <p id="grand-total">$275</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="book-now" class="btn-style">Book Now</button>
+                </div>
+            </main>
+        </div>
+
+    </div>
+                                    
+        
+
+    <div id="successful-msg">
+        <h1 class="text-center">Bihongo  <br> Bus Terminal</h1>
+        <div class="bg-setter">
+            <h2 class="head1" >you successfully registered !!</h2>
+            <p class="text-center">thank you for choosing us</p>
+        </div>
+    </div>
+
+    <script>
+
+                        // setting handler for show page
+
+
+        const loginBtn = document.getElementById("book-now");
+        loginBtn.addEventListener("click", function () {
+            const loginArea = document.getElementById("font-page");
+            loginArea.style.display = "none";
+            const showPage = document.getElementById("successful-msg");
+            showPage.style.display = "block";
+
+            // block means show the next page if we click
+        })
+
+                         // using function for making common elements
+
+        function handleTicketChange(ticket, isIncrease) {
+
+            const ticketCount = getInputValue(ticket);
+            let ticketNewCount = ticketCount;
+                        // ticket counting
+
+            if (isIncrease == true) {
+                ticketNewCount = ticketCount + 1;
+            }
+            if (isIncrease == false && ticketCount > 0) {
+                ticketNewCount = ticketCount - 1;
+            }
+            document.getElementById(ticket + '-count').value = ticketNewCount;
+
+                                 //  money counting
+
+            let sellingValue = 0;
+
+            if (ticket == 'FirstClass') {
+               sellingValue = ticketNewCount * 150;
+            }
+            if (ticket == 'Economy') {
+               sellingValue = ticketNewCount * 100;
+            }
+
+            document.getElementById(ticket + '-total').innerText = '$' +sellingValue;
+            calculateTotal();
+        }
+
+
+                                   //    whole selling value
+
+
+
+        function calculateTotal() {
+            const FirstClassCount = getInputValue('FirstClass');
+            const EconomyCount = getInputValue('Economy');
+
+            const totalPrice = FirstClassCount * 150 + EconomyCount * 100;
+            document.getElementById('total-price').innerText = '$' + totalPrice;
+
+            const tax = Math.round(totalPrice * 0.1);
+            // math.round give us a nearest round  value
+
+            document.getElementById('tax-amount').innerText = '$' + tax;
+
+            const ultimatePrice = totalPrice + tax;
+            document.getElementById('grand-total').innerText = '$' + ultimatePrice;
+        }
+
+        function getInputValue(ticket) {
+            console.log(ticket);
+            const ticketInput = document.getElementById(ticket + '-count');
+            const ticketCount = parseInt(ticketInput.value);
+            return ticketCount;
+        }
+
+    </script>
+    
+</body>
+
+</html>
